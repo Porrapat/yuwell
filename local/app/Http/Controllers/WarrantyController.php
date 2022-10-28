@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\warranty;
-use App\video;
 
 class WarrantyController extends Controller
 {
@@ -15,10 +14,7 @@ class WarrantyController extends Controller
      */
     public function index()
     {
-        $video = video::all();
-        $data = array(
-            'video' => $video,
-        );
-        return view('backend.warranty.warranty',$data);
+        $warranty = warranty::all();
+        return view('backend.warranty.warranty', compact('warranty'));
     }
 }

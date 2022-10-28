@@ -39,44 +39,27 @@
                     <thead>
                         <tr>
                             <th class="text-center" width="5%">No.</th>
-                            {{-- <th class="text-center" width="10%">Img</th> --}}
-                            <th class="text-center" width="15%">Name TH</th>
-                            <th class="text-center" width="15%">Name EN</th>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">Surname</th>
+                            <th class="text-center">Serial No</th>
                             <th class="text-center" width="25%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($video as  $key => $item)
+                        @foreach ($warranty as $key => $item)
                         <tr>
                             <td style="text-align: center; vertical-align: middle;">{{$key+1}}</td>
-                            {{-- <td><img src="{{url('local/public/'.$item->video_img)}}" width="100%" alt="no image"></td> --}}
-                            <td style="text-align: center; vertical-align: middle;"> {{$item->video_name_th}}</td>
-                            <td style="text-align: center; vertical-align: middle;"> {{$item->video_name_en}}</td>
-
-
-
-                                {{-- <td style="text-align: center; vertical-align: middle;">
-                                    <div class=" ">
-                                        <input class="border-checkbox" value="{{$item->milestone_id }}" type="checkbox"
-                                            id="show_{{$item->milestone_id }}" onclick="show_(this.value)"
-                                            {{$item->blog_popular == 1 ? 'checked' : ''}}>
-                                    </div>
-                                    @if ($item->blog_popular == 1 )
-                                    <span style="color: #4099ff" > Show </span>
-                                @else
-                                    <span style="color: #FF5370"> Off </span>
-                                @endif
-                                </td> --}}
+                            <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_name}}</td>
+                            <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_surname}}</td>
+                            <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_serial_number}}</td>
 
                             <td style="text-align: center; vertical-align: middle;">
                                 <div class="row">
                                     &nbsp;&nbsp;
-                                    {{-- button Edit --}}
-                                    <a href="{{ route('video.edit',$item->video_id )}}" class="btn btn-warning waves-effect"
+                                    <a href="{{ route('video.edit',$item->warranty_id )}}" class="btn btn-warning waves-effect"
                                         data-target="#Modalupdate"><i class="fa fa-edit"></i></a>
                                     &nbsp;&nbsp;
-                                    {{-- button DELETE --}}
-                                    <button type="button" class="btn btn-danger" onclick="del({{$item->video_id }})"><i class="fa fa-trash-o"></i> </button>
+                                    <button type="button" class="btn btn-danger" onclick="del({{$item->warranty_id }})"><i class="fa fa-trash-o"></i> </button>
                                 </div>
 
                             </td>
