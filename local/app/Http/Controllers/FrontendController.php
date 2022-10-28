@@ -186,6 +186,22 @@ class FrontendController extends Controller
        
         return back();
     }
+    public function warranty()
+    {
+        return view('frontend.warranty');
+    }
+
+    public function warranty_store(Request $request)
+    {
+        echo $request->warranty_name;
+        // return view('frontend.warranty');
+    }
+
+    public function serviceReport()
+    {
+        return view('frontend.service-report');
+    }
+
 
  
     

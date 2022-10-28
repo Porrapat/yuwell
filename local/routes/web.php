@@ -43,6 +43,10 @@ Route::get('/product-sub2', 'FrontendController@product_sub2');
 
 Route::get('/terms', 'FrontendController@terms');
 
+Route::get('/warranty', 'FrontendController@warranty');
+Route::post('/warranty', 'FrontendController@warranty_store');
+Route::get('/service-report', 'FrontendController@serviceReport');
+
 // backend
 Route::resource('/admin/banner', 'BannerController');
 Route::resource('/admin/video', 'VideoController');
@@ -60,6 +64,11 @@ Route::resource('/admin/product-type', 'ProductTypeController');
 Route::resource('/admin/product-collection', 'ProductCollectionController');
 Route::resource('/admin/product', 'ProductController');
 Route::resource('/admin/services', 'ServicesController');
+
+Route::resource('/admin/repair-status', 'RepairStatusController');
+Route::resource('/admin/serial-number', 'SerialNumberController');
+Route::resource('/admin/warranty', 'WarrantyController');
+Route::resource('/admin/service-report', 'ServiceReportController');
 
 
 

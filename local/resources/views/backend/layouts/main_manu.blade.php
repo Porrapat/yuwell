@@ -172,13 +172,34 @@
                 </a>
             </li>
             <li class="">
-                <a href="{{ url('/admin/contact') }}">
+                <a href="{{ url('/admin/repair-status') }}">
+                    <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                    <span class="pcoded-mtext">Repair Status</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+            <li class="">
+                <a href="{{ url('/admin/serial-number') }}">
+                    <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                    <span class="pcoded-mtext">Serial Number</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+            <li class="">
+                <a href="{{ url('/admin/warranty') }}">
                     <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                     <span class="pcoded-mtext">Warranty</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
-           
+            <li class="">
+                <a href="{{ url('/admin/service-report') }}">
+                    <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                    <span class="pcoded-mtext">Service Report</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+
         </ul>
 
 
