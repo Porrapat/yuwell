@@ -64,6 +64,8 @@ Route::resource('/admin/product-collection', 'ProductCollectionController');
 Route::resource('/admin/product', 'ProductController');
 Route::resource('/admin/services', 'ServicesController');
 
+Route::resource('/admin/warranty', 'WarrantyController');
+
 
 
 Route::get('/clc', function() {

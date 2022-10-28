@@ -146,7 +146,7 @@
                             <span class="pcoded-mcaret"></span>
                         </a>
                     </li>
-                   
+
                 </ul>
             </li> --}}
             <li class="">
@@ -163,7 +163,7 @@
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
-           
+
             <li class="">
                 <a href="{{ url('/admin/contact') }}">
                     <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
@@ -172,13 +172,13 @@
                 </a>
             </li>
             <li class="">
-                <a href="{{ url('/admin/contact') }}">
+                <a href="{{ url('/admin/warranty') }}">
                     <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                     <span class="pcoded-mtext">Warranty</span>
                     <span class="pcoded-mcaret"></span>
                 </a>
             </li>
-           
+
         </ul>
 
 
