@@ -8,5 +8,5 @@ class warranty extends Model
 {
     protected $table = 'tb_warranty';
     protected $primaryKey = 'warranty_id';
-    public $timestamps = true;
+    public $timestamps = false;
 }

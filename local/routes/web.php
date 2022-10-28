@@ -65,7 +65,10 @@ Route::resource('/admin/product-collection', 'ProductCollectionController');
 Route::resource('/admin/product', 'ProductController');
 Route::resource('/admin/services', 'ServicesController');
 
+Route::resource('/admin/repair-status', 'RepairStatusController');
+Route::resource('/admin/serial-number', 'SerialNumberController');
 Route::resource('/admin/warranty', 'WarrantyController');
+Route::resource('/admin/service-report', 'ServiceReportController');
 
 
 
