@@ -27,12 +27,13 @@
                                 </div>
                             </div>
                         </div>
-                        <form action="">
+                        <form action="{{ url('warranty') }}" method="POST">
+                            @csrf
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">ชื่อ <span>*</span></label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" name="warranty_name" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -227,7 +228,7 @@
                                 </li>
                             </ul>
                             <div class="text-center border-top p-3">
-                                <a href="" class="btn-default btn-red">SUBMIT</a>
+                                <button type="submit" class="btn-default btn-red">SUBMIT</button>
                             </div>
                         </form>
                     </div>

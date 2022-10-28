@@ -44,6 +44,7 @@ Route::get('/product-sub2', 'FrontendController@product_sub2');
 Route::get('/terms', 'FrontendController@terms');
 
 Route::get('/warranty', 'FrontendController@warranty');
+Route::post('/warranty', 'FrontendController@warranty_store');
 Route::get('/service-report', 'FrontendController@serviceReport');
 
 // backend
