@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <?php require('inc_head.php');
-    $pageName = ""; ?>
+    @include('frontend.inc_head')
+    <?php $pageName = ""; ?>
 </head>
 
 <style>
@@ -14,7 +14,7 @@
 
 <body>
 
-    <?php require('inc_menu.php'); ?>
+    @include('frontend.inc_menu')
 
     <div class="wrapper">
         <div class="container">
@@ -203,8 +203,8 @@
         </div>
     </div>
 
-    <?php require('inc_footer.php'); ?>
-    <?php require('scriptjs.php'); ?>
+    @include('frontend.inc_footer')
+    @include('frontend.scriptjs')
 
 </body>
 
