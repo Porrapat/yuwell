@@ -16,6 +16,34 @@
 
     @include('frontend.inc_menu')
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (Session::get('success'))
+    <script type="text/javascript">
+        swal.fire({
+            icon:'success',
+            title:'Success!',
+            text:"{{ Session::get('success') }}",
+            timer:3000,
+            type:'success'
+        }).then((value) => {
+        }).catch(swal.noop);
+    </script>
+    @endif
+
+    @if (Session::get('error'))
+    <script type="text/javascript">
+        swal.fire({
+            icon:'error',
+            title:'Error!',
+            text:"{{ Session::get('error') }}",
+            timer:3000,
+            type:'error'
+        }).then((value) => {
+        }).catch(swal.noop);
+    </script>
+    @endif
+
     <div class="wrapper">
         <div class="container">
             <div class="row">
@@ -27,31 +55,66 @@
                                 <p>ใบรายงานผลการบริการ</p>
                             </div>
                             <div class="col-right">
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control" placeholder="Search serial number">
-                                </div>
+                                <form id="my_form" action="{{ url('/service-report') }}" method="GET">
+                                    <div class="form-group has-search">
+                                        <a href="javascript:{}" onclick="document.getElementById('my_form').submit();"><span class="fa fa-search form-control-feedback" style="color:#ccc"></span></a>
+                                        <input type="text" id="serial_number" name="serial_number" class="form-control" placeholder="Search serial number">
+                                        @if ($param == true && $found_warranty == null)
+                                            <div style="font-size:10px; color:red">Cannot found this serial number</div>
+                                        @endif
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                        <form action="">
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form action="{{ url('service-report') }}" method="POST">
+                            @csrf
                             <div class="row">
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-3">
                                     <div class="mb-3">
-                                        <label class="form-label">ชื่อ-นามสกุล <span>*</span></label>
-                                        <input type="text" class="form-control">
+                                        <label class="form-label">ชื่อ <span>*</span></label>
+                                        @if($disabled)
+                                            <input type="text" name="service_report_name" class="form-control" readonly style="background-color:#ccc">
+                                        @else
+                                            <input type="text" name="service_report_name" class="form-control" readonly style="background-color:#ccc" value="{{ $found_warranty->warranty_name }}">
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">นามสกุล <span>*</span></label>
+                                        @if($disabled)
+                                            <input type="text" name="service_report_surname" class="form-control" readonly style="background-color:#ccc">
+                                        @else
+                                            <input type="text" name="service_report_surname" class="form-control" readonly style="background-color:#ccc" value="{{ $found_warranty->warranty_surname }}">
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
                                     <div class="mb-3">
                                         <label class="form-label">เบอร์โทร<span>*</span></label>
-                                        <input type="text" class="form-control">
+                                        @if($disabled)
+                                            <input type="text" name="service_report_telephone" class="form-control" readonly style="background-color:#ccc">
+                                        @else
+                                            <input type="text" name="service_report_telephone" class="form-control" readonly style="background-color:#ccc" value="{{ $found_warranty->warranty_telephone }}">
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-3">
                                     <div class="mb-3">
                                         <label class="form-label">วันที่<span>*</span></label>
                                         <div id="datepicker" class="installation input-group date" data-date-format="dd-mm-yyyy">
-                                            <input class="form-control" type="text" />
+                                            <input class="form-control" type="text" name="service_report_service_date" />
                                             <span class="input-group-addon"><i class="bi bi-calendar3"></i></span>
                                         </div>
                                     </div>
@@ -61,7 +124,11 @@
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label class="form-label">ที่อยู่ <span>*</span></label>
-                                        <textarea class="form-control" rows="3"></textarea>
+                                        @if($disabled)
+                                            <textarea class="form-control" rows="3" name="service_report_address" readonly style="background-color:#ccc"></textarea>
+                                        @else
+                                            <textarea class="form-control" rows="3" name="service_report_address" readonly style="background-color:#ccc">{{ $found_warranty->warranty_address }}</textarea>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -71,19 +138,19 @@
                                     <ul style="margin-bottom: 0;">
                                         <li>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="repairCheckbox1" value="option1">
+                                                <input class="form-check-input" name="service_report_service_type[]" type="checkbox" id="repairCheckbox1" value="งานบริการ">
                                                 <label class="form-check-label" for="repairCheckbox1">งานบริการ</label>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="repairCheckbox2" value="option2">
+                                                <input class="form-check-input" name="service_report_service_type[]" type="checkbox" id="repairCheckbox2" value="งานบํารุงรักษา">
                                                 <label class="form-check-label" for="repairCheckbox2">งานบํารุงรักษา</label>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" id="repairCheckbox3" value="option3">
+                                                <input class="form-check-input" name="service_report_service_type[]" type="checkbox" id="repairCheckbox3" value="อื่นๆ">
                                                 <label class="form-check-label" for="repairCheckbox3">อื่นๆ</label>
                                             </div>
                                         </li>
@@ -94,7 +161,11 @@
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label class="form-label">หมายเลขเครื่อง<span>*</span></label>
-                                        <input type="text" class="form-control">
+                                        @if($disabled)
+                                            <input type="text" name="service_report_serial_number" class="form-control" readonly style="background-color:#ccc">
+                                        @else
+                                            <input type="text" name="service_report_serial_number" class="form-control" readonly style="background-color:#ccc" value="{{ $found_warranty->warranty_serial_number }}">
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +179,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td> <textarea class="form-control" rows="3"></textarea></td>
+                                                <td><textarea class="form-control" rows="3" name="service_report_problem"></textarea></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -126,8 +197,8 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td> <input type="text" class="form-control"></td>
-                                                <td> <input type="text" class="form-control"></td>
+                                                <td> <input type="text" name="service_report_list_1" class="form-control"></td>
+                                                <td> <input type="text" name="service_report_quantity_1" class="form-control"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -137,7 +208,7 @@
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label class="form-label">การแก้ไขปัญหา</label>
-                                        <textarea class="form-control" rows="3"></textarea>
+                                        <textarea class="form-control" rows="3" name="service_report_how_to_fix_problem"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +216,7 @@
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label class="form-label">หมายเหตุ</label>
-                                        <textarea class="form-control" rows="3"></textarea>
+                                        <textarea class="form-control" rows="3" name="service_report_note"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -154,13 +225,14 @@
                                     <h5>ผลการให้บริการ</h5>
                                     <div class="row">
                                         <div class="form-check form-check-inline col-12">
-                                            <input class="form-check-input" type="checkbox" id="4" value="option4">
+                                            <input class="form-radio-input" name="service_report_result_type" type="radio" id="4" value="option4">
                                             <label class="form-check-label" for="repairCheckbox4">เรียบร้อยใชงานได้ปกติ</label>
                                         </div>
                                         <div class="form-check form-check-inline col-12">
-                                            <input class="form-check-input" type="checkbox" id="5" value="option5">
+                                            <input class="form-radio-input" name="service_report_result_type" type="radio" id="5" value="option5">
                                             <label class="form-check-label" for="repairCheckbox5">ยังไม่เรียบร้อย</label>
-                                            <textarea class="form-control" rows="3"></textarea>
+
+                                            <textarea class="form-control" rows="3" name="service_report_result_type_not_good"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -171,20 +243,20 @@
                                         <div class="col-12 col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">ลูกค้า</label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control" name="service_report_customer_sign_name">
                                             </div>
                                             <div id="datepicker" class="installation input-group date" data-date-format="dd-mm-yyyy">
-                                                <input class="form-control" type="text" />
+                                                <input class="form-control" type="text" name="service_report_customer_sign_date" />
                                                 <span class="input-group-addon"><i class="bi bi-calendar3"></i></span>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">วิศวกร</label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control" name="service_report_engineer_sign_name">
                                             </div>
                                             <div id="datepicker" class="installation input-group date" data-date-format="dd-mm-yyyy">
-                                                <input class="form-control" type="text" />
+                                                <input class="form-control" type="text" name="service_report_engineer_sign_date" />
                                                 <span class="input-group-addon"><i class="bi bi-calendar3"></i></span>
                                             </div>
                                         </div>
@@ -194,7 +266,10 @@
 
 
                             <div class="text-center border-top p-3">
-                                <a href="" class="btn-default btn-red">SUBMIT</a>
+                                @if($disabled)
+                                @else
+                                    <button type="submit" class="btn-default btn-red">SUBMIT</button>
+                                @endif
                             </div>
                         </form>
                     </div>

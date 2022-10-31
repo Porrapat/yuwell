@@ -46,6 +46,7 @@ Route::get('/terms', 'FrontendController@terms');
 Route::get('/warranty', 'FrontendController@warranty');
 Route::post('/warranty', 'FrontendController@warranty_store');
 Route::get('/service-report', 'FrontendController@serviceReport');
+Route::post('/service-report', 'FrontendController@serviceReport_store');
 
 // backend
 Route::resource('/admin/banner', 'BannerController');

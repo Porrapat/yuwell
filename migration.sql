@@ -13,8 +13,8 @@ CREATE TABLE `tb_warranty` (
   `warranty_lot` varchar(150) DEFAULT NULL,
   `warranty_shop_name` varchar(150) DEFAULT NULL,
   `warranty_buy_date` DATE DEFAULT NULL,
-  `warranty_why_know_yuwell` varchar(150) DEFAULT NULL,
-  `warranty_decision_buy_because` varchar(150) DEFAULT NULL,
+  `warranty_why_know_yuwell` varchar(300) DEFAULT NULL,
+  `warranty_decision_buy_because` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`warranty_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -26,6 +26,7 @@ CREATE TABLE `tb_service_report` (
   `service_report_serial_number` varchar(150) DEFAULT NULL,
   `service_report_name` VARCHAR(150) DEFAULT NULL,
   `service_report_surname` VARCHAR(150) DEFAULT NULL,
+  `service_report_telephone` VARCHAR(150) DEFAULT NULL,
   `service_report_address` VARCHAR(400) DEFAULT NULL,
   `service_report_service_date` DATE DEFAULT NULL,
   `service_report_service_type` varchar(150) DEFAULT NULL,

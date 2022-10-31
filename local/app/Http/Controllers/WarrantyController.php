@@ -17,4 +17,10 @@ class WarrantyController extends Controller
         $warranty = warranty::all();
         return view('backend.warranty.warranty', compact('warranty'));
     }
+
+    public function destroy($id)
+    {
+        warranty::where('warranty_id', $id)->delete();
+        return back();
+    }
 }
