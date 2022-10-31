@@ -15,9 +15,13 @@ use Session;
 use App\country;
 use App\video;
 use App\producttype;
+use App\serialnumber;
+use App\warranty;
+use App\servicereport;
 use DB;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class FrontendController extends Controller
 {
@@ -186,22 +190,154 @@ class FrontendController extends Controller
 
         return back();
     }
-    public function warranty()
+    public function warranty(Request $request)
     {
-        return view('frontend.warranty');
+        $found_serial = false;
+        $param = false;
+        if ($request->serial_number)
+        {
+            $found_serial = serialnumber::where('serial_number_no', $request->serial_number)->first();
+            if($found_serial)
+            {
+                $disabled = false;
+            }
+            else
+            {
+                $disabled = true;
+            }
+            $param = true;
+        }
+        else
+        {
+            $param = false;
+            $disabled = true;
+        }
+        return view('frontend.warranty', compact('disabled', 'found_serial', 'param'));
     }
 
     public function warranty_store(Request $request)
     {
-        echo $request->warranty_name;
-        // return view('frontend.warranty');
+        $validatedData = $request->validate([
+            'warranty_serial_number' => 'required',
+            'warranty_name' => 'required',
+            'warranty_surname' => 'required',
+            'warranty_address' => 'required',
+            'warranty_telephone' => 'required',
+            'warranty_email' => 'required',
+            'warranty_product_name' => 'required',
+            'warranty_type_name' => 'required',
+            'warranty_lot' => 'required',
+            'warranty_shop_name' => 'required'
+        ]);
+
+        $warranty = warranty::where('warranty_serial_number', $request->warranty_serial_number)->first();
+        if(!$warranty)
+        {
+            $warranty = new warranty;
+        }
+        $warranty->warranty_serial_number = $request->warranty_serial_number;
+        $warranty->warranty_name = $request->warranty_name;
+        $warranty->warranty_surname = $request->warranty_surname;
+        $warranty->warranty_address = $request->warranty_address;
+        $warranty->warranty_telephone = $request->warranty_telephone;
+        $warranty->warranty_email = $request->warranty_email;
+        $warranty->warranty_product_name = $request->warranty_product_name;
+        $warranty->warranty_type_name = $request->warranty_type_name;
+        $warranty->warranty_lot = $request->warranty_lot;
+        $warranty->warranty_shop_name = $request->warranty_shop_name;
+        $warranty->warranty_buy_date = Carbon::createFromFormat('d-m-Y', $request->warranty_buy_date);
+
+        $warranty->warranty_why_know_yuwell = implode(",", $request->warranty_why_know_yuwell);
+        $warranty->warranty_decision_buy_because = implode(",", $request->warranty_decision_buy_because);
+        $warranty->save();
+
+        return redirect('/warranty')->with('success', 'Data is successfully saved');
     }
 
-    public function serviceReport()
+    public function serviceReport(Request $request)
     {
-        return view('frontend.service-report');
+        $found_warranty = false;
+        $param = false;
+        if ($request->serial_number)
+        {
+            $found_warranty = warranty::where('warranty_serial_number', $request->serial_number)->first();
+            if($found_warranty)
+            {
+                $disabled = false;
+            }
+            else
+            {
+                $disabled = true;
+            }
+            $param = true;
+        }
+        else
+        {
+            $param = false;
+            $disabled = true;
+        }
+        return view('frontend.service-report', compact('disabled', 'found_warranty', 'param'));
     }
 
+    public function serviceReport_store(Request $request)
+    {
+
+        // `service_report_id` int(11) NOT NULL AUTO_INCREMENT,
+        // `service_report_serial_number` varchar(150) DEFAULT NULL,
+        // `service_report_name` varchar(150) DEFAULT NULL,
+        // `service_report_surname` varchar(150) DEFAULT NULL,
+        // `service_report_telephone` varchar(150) DEFAULT NULL,
+        // `service_report_address` varchar(400) DEFAULT NULL,
+        // `service_report_service_date` date DEFAULT NULL,
+        // `service_report_service_type` varchar(150) DEFAULT NULL,
+        // `service_report_problem` varchar(150) DEFAULT NULL,
+        // `service_report_list_1` varchar(150) DEFAULT NULL,
+        // `service_report_quantity_1` varchar(150) DEFAULT NULL,
+        // `service_report_how_to_fix_problem` varchar(150) DEFAULT NULL,
+        // `service_report_note` varchar(150) DEFAULT NULL,
+        // `service_report_result_type` varchar(150) DEFAULT NULL,
+        // `service_report_result_type_not_good` varchar(150) DEFAULT NULL,
+        // `service_report_customer_sign_name` varchar(150) DEFAULT NULL,
+        // `service_report_customer_sign_date` date DEFAULT NULL,
+        // `service_report_engineer_sign_name` varchar(150) DEFAULT NULL,
+        // `service_report_engineer_sign_date` date DEFAULT NULL,
+
+        $validatedData = $request->validate([
+            'service_report_serial_number' => 'required',
+            'service_report_name' => 'required',
+            'service_report_surname' => 'required',
+            'service_report_address' => 'required',
+            'service_report_service_date' => 'required'
+        ]);
+
+        $servicereport = servicereport::where('service_report_serial_number', $request->service_report_serial_number)->first();
+        if(!$servicereport)
+        {
+            $servicereport = new servicereport;
+        }
+        $servicereport->service_report_serial_number = $request->service_report_serial_number;
+        $servicereport->service_report_name = $request->service_report_name;
+        $servicereport->service_report_surname = $request->service_report_surname;
+        $servicereport->service_report_address = $request->service_report_address;
+        $servicereport->service_report_service_date = Carbon::createFromFormat('d-m-Y', $request->service_report_service_date);
+
+        $servicereport->service_report_service_type = implode(",", $request->service_report_service_type);
+        $servicereport->service_report_problem = $request->service_report_problem;
+        $servicereport->service_report_list_1 = $request->service_report_list_1;
+        $servicereport->service_report_quantity_1 = $request->service_report_quantity_1;
+        $servicereport->service_report_how_to_fix_problem = $request->service_report_how_to_fix_problem;
+        $servicereport->service_report_note = $request->service_report_note;
+        $servicereport->service_report_result_type = $request->service_report_result_type;
+        $servicereport->service_report_result_type_not_good = $request->service_report_result_type_not_good;
+
+        $servicereport->service_report_customer_sign_name = $request->service_report_customer_sign_name;
+        $servicereport->service_report_customer_sign_date = Carbon::createFromFormat('d-m-Y', $request->service_report_customer_sign_date);
+        $servicereport->service_report_engineer_sign_name = $request->service_report_engineer_sign_name;
+        $servicereport->service_report_engineer_sign_date = Carbon::createFromFormat('d-m-Y', $request->service_report_engineer_sign_date);
+        $servicereport->save();
+
+        return redirect('/service-report')->with('success', 'Data is successfully saved');
+    }
 
 
 }
