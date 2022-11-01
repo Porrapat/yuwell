@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS `tb_service_report`;
 
 CREATE TABLE `tb_service_report` (
   `service_report_id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_report_repair_code` VARCHAR(150) DEFAULT NULL,
   `service_report_serial_number` varchar(150) DEFAULT NULL,
   `service_report_name` VARCHAR(150) DEFAULT NULL,
   `service_report_surname` VARCHAR(150) DEFAULT NULL,
@@ -41,6 +42,7 @@ CREATE TABLE `tb_service_report` (
   `service_report_customer_sign_date` DATE DEFAULT NULL,
   `service_report_engineer_sign_name` varchar(150) DEFAULT NULL,
   `service_report_engineer_sign_date` DATE DEFAULT NULL,
+  `service_report_repair_status_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`service_report_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -282,3 +284,10 @@ INSERT INTO `tb_repair_status`
   7,
   'ปิดงาน'
 );
+
+
+-- ALTER TABLE tb_service_report
+-- ADD service_report_repair_code VARCHAR(150) DEFAULT NULL AFTER service_report_id; 
+
+-- ALTER TABLE tb_service_report
+-- ADD service_report_repair_status_id int(11) DEFAULT NULL AFTER service_report_engineer_sign_date; 

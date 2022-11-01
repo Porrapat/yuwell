@@ -30,8 +30,6 @@
     <div class="card">
         <div class="card-header">
             <h5>service report</h5>
-            <button type="button" class="btn btn-success waves-effect" data-toggle="modal" data-target="#large-Modal"><i
-                    class="fa fa-plus"> </i> Add</button>
         </div>
         <div class="card-block table-border-style">
             <div class="table-responsive">
@@ -39,27 +37,27 @@
                     <thead>
                         <tr>
                             <th class="text-center" width="5%">No.</th>
-                            <th class="text-center">Name</th>
-                            <th class="text-center">Surname</th>
+                            <th class="text-center">Repair No</th>
                             <th class="text-center">Serial No</th>
-                            <th class="text-center" width="25%">Action</th>
+                            <th class="text-center">Name</th>
+                            <th class="text-center" width="30%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($warranty as $key => $item)
+                        @foreach ($servicereport as $key => $item)
                         <tr>
                             <td style="text-align: center; vertical-align: middle;">{{$key+1}}</td>
-                            <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_name}}</td>
-                            <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_surname}}</td>
-                            <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_serial_number}}</td>
+                            <td style="text-align: center; vertical-align: middle;"> {{$item->service_report_serial_number}}</td>
+                            <td style="text-align: center; vertical-align: middle;"> {{$item->service_report_name}}</td>
+                            <td style="text-align: center; vertical-align: middle;"> {{$item->service_report_surname}}</td>
 
                             <td style="text-align: center; vertical-align: middle;">
                                 <div class="row">
-                                    &nbsp;&nbsp;
-                                    <a href="{{ route('video.edit',$item->warranty_id )}}" class="btn btn-warning waves-effect"
+                                    <a href="{{ url('/admin/service-report/'.$item->service_report_id.'/edit-only-status' ) }}" class="btn btn-info waves-effect"
+                                        data-target="#Modalupdate">เพิ่มเลขซ่อมและสถานะ</a>
+                                    <a href="{{ route('service-report.edit',$item->service_report_id )}}" class="btn btn-warning waves-effect"
                                         data-target="#Modalupdate"><i class="fa fa-edit"></i></a>
-                                    &nbsp;&nbsp;
-                                    <button type="button" class="btn btn-danger" onclick="del({{$item->warranty_id }})"><i class="fa fa-trash-o"></i> </button>
+                                    <button type="button" class="btn btn-danger" onclick="del({{$item->service_report_id }})"><i class="fa fa-trash-o"></i> </button>
                                 </div>
 
                             </td>
