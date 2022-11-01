@@ -226,7 +226,7 @@
                                     <div class="row">
                                         <div class="form-check form-check-inline col-12">
                                             <input class="form-radio-input" name="service_report_result_type" type="radio" id="4" value="option4">
-                                            <label class="form-check-label" for="repairCheckbox4">เรียบร้อยใชงานได้ปกติ</label>
+                                            <label class="form-check-label" for="repairCheckbox4">เรียบร้อยใช้งานได้ปกติ</label>
                                         </div>
                                         <div class="form-check form-check-inline col-12">
                                             <input class="form-radio-input" name="service_report_result_type" type="radio" id="5" value="option5">

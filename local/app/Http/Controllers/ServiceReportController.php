@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\warranty;
+use App\servicereport;
 
 class ServiceReportController extends Controller
 {
@@ -14,7 +14,19 @@ class ServiceReportController extends Controller
      */
     public function index()
     {
-        $warranty = warranty::all();
-        return view('backend.service-report.service-report', compact('warranty'));
+        $servicereport = servicereport::all();
+        return view('backend.service-report.service-report', compact('servicereport'));
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $servicereport = servicereport::find($id);
+        return view('backend.service-report.service-report-edit', compact('servicereport'));
+    }
+
+    public function editOnlyStatus(Request $request, $id)
+    {
+        $servicereport = servicereport::find($id);
+        return view('backend.service-report.service-report-edit-only-status', compact('servicereport'));
     }
 }

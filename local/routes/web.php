@@ -70,6 +70,7 @@ Route::resource('/admin/repair-status', 'RepairStatusController');
 Route::resource('/admin/serial-number', 'SerialNumberController');
 Route::resource('/admin/warranty', 'WarrantyController');
 Route::resource('/admin/service-report', 'ServiceReportController');
+Route::get('/admin/service-report/{id}/edit-only-status', 'ServiceReportController@editOnlyStatus');
 
 
 

@@ -281,27 +281,6 @@ class FrontendController extends Controller
 
     public function serviceReport_store(Request $request)
     {
-
-        // `service_report_id` int(11) NOT NULL AUTO_INCREMENT,
-        // `service_report_serial_number` varchar(150) DEFAULT NULL,
-        // `service_report_name` varchar(150) DEFAULT NULL,
-        // `service_report_surname` varchar(150) DEFAULT NULL,
-        // `service_report_telephone` varchar(150) DEFAULT NULL,
-        // `service_report_address` varchar(400) DEFAULT NULL,
-        // `service_report_service_date` date DEFAULT NULL,
-        // `service_report_service_type` varchar(150) DEFAULT NULL,
-        // `service_report_problem` varchar(150) DEFAULT NULL,
-        // `service_report_list_1` varchar(150) DEFAULT NULL,
-        // `service_report_quantity_1` varchar(150) DEFAULT NULL,
-        // `service_report_how_to_fix_problem` varchar(150) DEFAULT NULL,
-        // `service_report_note` varchar(150) DEFAULT NULL,
-        // `service_report_result_type` varchar(150) DEFAULT NULL,
-        // `service_report_result_type_not_good` varchar(150) DEFAULT NULL,
-        // `service_report_customer_sign_name` varchar(150) DEFAULT NULL,
-        // `service_report_customer_sign_date` date DEFAULT NULL,
-        // `service_report_engineer_sign_name` varchar(150) DEFAULT NULL,
-        // `service_report_engineer_sign_date` date DEFAULT NULL,
-
         $validatedData = $request->validate([
             'service_report_serial_number' => 'required',
             'service_report_name' => 'required',
@@ -319,9 +298,14 @@ class FrontendController extends Controller
         $servicereport->service_report_name = $request->service_report_name;
         $servicereport->service_report_surname = $request->service_report_surname;
         $servicereport->service_report_address = $request->service_report_address;
-        $servicereport->service_report_service_date = Carbon::createFromFormat('d-m-Y', $request->service_report_service_date);
-
-        $servicereport->service_report_service_type = implode(",", $request->service_report_service_type);
+        if($request->service_report_service_date)
+        {
+            $servicereport->service_report_service_date = Carbon::createFromFormat('d-m-Y', $request->service_report_service_date);
+        }
+        if($request->service_report_service_type && is_array($request->service_report_service_type))
+        {
+            $servicereport->service_report_service_type = implode(",", $request->service_report_service_type);
+        }
         $servicereport->service_report_problem = $request->service_report_problem;
         $servicereport->service_report_list_1 = $request->service_report_list_1;
         $servicereport->service_report_quantity_1 = $request->service_report_quantity_1;
@@ -331,9 +315,17 @@ class FrontendController extends Controller
         $servicereport->service_report_result_type_not_good = $request->service_report_result_type_not_good;
 
         $servicereport->service_report_customer_sign_name = $request->service_report_customer_sign_name;
-        $servicereport->service_report_customer_sign_date = Carbon::createFromFormat('d-m-Y', $request->service_report_customer_sign_date);
+
+        if($request->service_report_customer_sign_date)
+        {
+            $servicereport->service_report_customer_sign_date = Carbon::createFromFormat('d-m-Y', $request->service_report_customer_sign_date);
+        }
         $servicereport->service_report_engineer_sign_name = $request->service_report_engineer_sign_name;
-        $servicereport->service_report_engineer_sign_date = Carbon::createFromFormat('d-m-Y', $request->service_report_engineer_sign_date);
+        if($request->service_report_engineer_sign_date)
+        {
+            $servicereport->service_report_engineer_sign_date = Carbon::createFromFormat('d-m-Y', $request->service_report_engineer_sign_date);
+        }
+        $servicereport->service_report_repair_status_id = 1;
         $servicereport->save();
 
         return redirect('/service-report')->with('success', 'Data is successfully saved');
