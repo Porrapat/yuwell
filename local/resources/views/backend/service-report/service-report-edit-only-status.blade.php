@@ -32,7 +32,7 @@
             <h5>edit service report</h5>
         </div>
         <div class="card-block table-border-style">
-            <form method="post" action="{{ route('service-report.update', $servicereport->service_report_id) }}" id="main-service-report">
+            <form method="post" action="{{ url('admin/service-report/'.$servicereport->service_report_id.'/update-only-status') }}" id="main-service-report">
                 <div class="row">
                     <div class="col-md-12">
                             @csrf
@@ -66,8 +66,13 @@
                                     <strong>Service Status</strong>
                                     <select id="service_report_repair_status_id" name="service_report_repair_status_id" class="form-control custom-select">
 
-                                        
-                                        <option value="{{ $servicereport->service_report_repair_status_id }}">{{ $servicereport->repair_status->repair_status_name }}</option>
+                                        @foreach($repairstatus as $rs)
+                                            <option value="{{ $rs->repair_status_id }}"
+                                            @if($rs->repair_status_id == $servicereport->service_report_repair_status_id)
+                                                selected
+                                            @endif
+                                            >{{ $rs->repair_status_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

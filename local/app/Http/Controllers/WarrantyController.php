@@ -14,7 +14,7 @@ class WarrantyController extends Controller
      */
     public function index()
     {
-        $warranty = warranty::all();
+        $warranty = warranty::paginate(10);
         return view('backend.warranty.warranty', compact('warranty'));
     }
 

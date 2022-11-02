@@ -16,7 +16,7 @@ class SerialNumberController extends Controller
      */
     public function index()
     {
-        $serialnumber = serialnumber::all();
+        $serialnumber = serialnumber::paginate(10);
         return view('backend.serial-number.serial-number', compact('serialnumber'));
     }
 

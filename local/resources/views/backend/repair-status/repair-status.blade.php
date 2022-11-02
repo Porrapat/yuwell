@@ -67,6 +67,10 @@
 
                 </table>
             </div>
+
+            <div class="mt-4">
+                {{ $repairstatus->appends(\Request::except('page'))->render() }}
+            </div>
         </div>
     </div>
     <!-- end panel -->

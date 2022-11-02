@@ -245,10 +245,19 @@ class FrontendController extends Controller
         $warranty->warranty_type_name = $request->warranty_type_name;
         $warranty->warranty_lot = $request->warranty_lot;
         $warranty->warranty_shop_name = $request->warranty_shop_name;
-        $warranty->warranty_buy_date = Carbon::createFromFormat('d-m-Y', $request->warranty_buy_date);
+        if($request->warranty_buy_date)
+        {
+            $warranty->warranty_buy_date = Carbon::createFromFormat('d-m-Y', $request->warranty_buy_date);
+        }
 
-        $warranty->warranty_why_know_yuwell = implode(",", $request->warranty_why_know_yuwell);
-        $warranty->warranty_decision_buy_because = implode(",", $request->warranty_decision_buy_because);
+        if($request->warranty_why_know_yuwell && is_array($request->warranty_why_know_yuwell))
+        {
+            $warranty->warranty_why_know_yuwell = implode(",", $request->warranty_why_know_yuwell);
+        }
+        if($request->warranty_decision_buy_because && is_array($request->warranty_decision_buy_because))
+        {
+            $warranty->warranty_decision_buy_because = implode(",", $request->warranty_decision_buy_because);
+        }
         $warranty->save();
 
         return redirect('/warranty')->with('success', 'Data is successfully saved');
@@ -331,5 +340,21 @@ class FrontendController extends Controller
         return redirect('/service-report')->with('success', 'Data is successfully saved');
     }
 
-
+    public function serviceReportCheck(Request $request)
+    {
+        $result = "";
+        if ($request->service_report_repair_code)
+        {
+            $servicereport = servicereport::where('service_report_repair_code', $request->service_report_repair_code)->first();
+            if($servicereport)
+            {
+                $result = $servicereport->repair_status->repair_status_name;
+            }
+            else
+            {
+                $result = "ไม่ค้นพบเลขซ่อมที่ต้องการ";
+            }
+        }
+        return view('frontend.service-report-check', compact('result'));
+    }
 }

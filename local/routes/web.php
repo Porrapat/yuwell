@@ -47,6 +47,7 @@ Route::get('/warranty', 'FrontendController@warranty');
 Route::post('/warranty', 'FrontendController@warranty_store');
 Route::get('/service-report', 'FrontendController@serviceReport');
 Route::post('/service-report', 'FrontendController@serviceReport_store');
+Route::get('/service-report-check', 'FrontendController@serviceReportCheck');
 
 // backend
 Route::resource('/admin/banner', 'BannerController');
@@ -71,6 +72,7 @@ Route::resource('/admin/serial-number', 'SerialNumberController');
 Route::resource('/admin/warranty', 'WarrantyController');
 Route::resource('/admin/service-report', 'ServiceReportController');
 Route::get('/admin/service-report/{id}/edit-only-status', 'ServiceReportController@editOnlyStatus');
+Route::patch('/admin/service-report/{id}/update-only-status', 'ServiceReportController@updateOnlyStatus');
 
 
 
