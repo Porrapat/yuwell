@@ -74,6 +74,10 @@
 
                 </table>
             </div>
+
+            <div class="mt-4">
+                {{ $serialnumber->appends(\Request::except('page'))->render() }}
+            </div>
         </div>
     </div>
     <!-- end panel -->

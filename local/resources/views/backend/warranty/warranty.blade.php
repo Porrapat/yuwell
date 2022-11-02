@@ -71,7 +71,7 @@
                             <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_buy_date}}</td>
                             <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_why_know_yuwell}}</td>
                             <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_decision_buy_because}}</td>
-                            
+
                             <td style="text-align: center; vertical-align: middle;">
                                 <div class="row">
                                     <button type="button" class="btn btn-danger" onclick="del({{$item->warranty_id }})"><i class="fa fa-trash-o"></i> </button>
@@ -83,6 +83,10 @@
                     </tbody>
 
                 </table>
+            </div>
+
+            <div class="mt-4">
+                {{ $warranty->appends(\Request::except('page'))->render() }}
             </div>
         </div>
     </div>

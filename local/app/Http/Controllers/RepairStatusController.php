@@ -14,7 +14,7 @@ class RepairStatusController extends Controller
      */
     public function index()
     {
-        $repairstatus = repairstatus::all();
+        $repairstatus = repairstatus::paginate(10);
         return view('backend.repair-status.repair-status', compact('repairstatus'));
     }
 
