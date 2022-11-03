@@ -68,6 +68,7 @@ Route::resource('/admin/product', 'ProductController');
 Route::resource('/admin/services', 'ServicesController');
 
 Route::resource('/admin/repair-status', 'RepairStatusController');
+Route::post('/admin/serial-number/import-excel', 'SerialNumberController@importExcel');
 Route::resource('/admin/serial-number', 'SerialNumberController');
 Route::get('/admin/warranty/print-excel', 'WarrantyController@printExcel');
 Route::resource('/admin/warranty', 'WarrantyController');
