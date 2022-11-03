@@ -43,6 +43,12 @@ Route::get('/product-sub2', 'FrontendController@product_sub2');
 
 Route::get('/terms', 'FrontendController@terms');
 
+Route::get('/warranty', 'FrontendController@warranty');
+Route::post('/warranty', 'FrontendController@warranty_store');
+Route::get('/service-report', 'FrontendController@serviceReport');
+Route::post('/service-report', 'FrontendController@serviceReport_store');
+Route::get('/service-report-check', 'FrontendController@serviceReportCheck');
+
 // backend
 Route::resource('/admin/banner', 'BannerController');
 Route::resource('/admin/video', 'VideoController');
@@ -61,6 +67,16 @@ Route::resource('/admin/product-collection', 'ProductCollectionController');
 Route::resource('/admin/product', 'ProductController');
 Route::resource('/admin/services', 'ServicesController');
 
+Route::resource('/admin/repair-status', 'RepairStatusController');
+Route::post('/admin/serial-number/import-excel', 'SerialNumberController@importExcel');
+Route::resource('/admin/serial-number', 'SerialNumberController');
+Route::get('/admin/warranty/print-excel', 'WarrantyController@printExcel');
+Route::get('/admin/warranty/print/{id}', 'WarrantyController@print');
+Route::resource('/admin/warranty', 'WarrantyController');
+Route::resource('/admin/service-report', 'ServiceReportController');
+Route::get('/admin/service-report/{id}/edit-only-status', 'ServiceReportController@editOnlyStatus');
+Route::patch('/admin/service-report/{id}/update-only-status', 'ServiceReportController@updateOnlyStatus');
+Route::get('/admin/service-report/print/{id}', 'ServiceReportController@print');
 
 
 Route::get('/clc', function() {
