@@ -9,6 +9,34 @@
 @endsection
 @section('content')
 
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (Session::get('success'))
+<script type="text/javascript">
+    swal.fire({
+        icon:'success',
+        title:'Success!',
+        text:"{{ Session::get('success') }}",
+        timer:3000,
+        type:'success'
+    }).then((value) => {
+    }).catch(swal.noop);
+</script>
+@endif
+
+@if (Session::get('error'))
+<script type="text/javascript">
+    swal.fire({
+        icon:'error',
+        title:'Error!',
+        text:"{{ Session::get('error') }}",
+        timer:3000,
+        type:'error'
+    }).then((value) => {
+    }).catch(swal.noop);
+</script>
+@endif
+
 <div class="page-header card">
     <div class="card-block front-icon-breadcrumb">
         <h5 class="m-b-10">Serial Number</h5>
@@ -32,9 +60,16 @@
             <h5>serial number</h5>
             <button type="button" class="btn btn-success waves-effect" data-toggle="modal" data-target="#large-Modal"><i
                     class="fa fa-plus"> </i> Add</button>
-        </div>
 
-        @include('flash-message')
+            <br/>
+            <br/>
+
+            <form action="{{ url('/admin/serial-number/import-excel') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input class="form-control" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="serial_number_import_excel" name="serial_number_import_excel" type="file" />
+                <button type="submit" class="btn btn-success waves-effect"><i class="fa fa-plus"> </i> Import Data using Excel</button>
+            </form>
+        </div>
 
         <div class="card-block table-border-style">
             <div class="table-responsive">
