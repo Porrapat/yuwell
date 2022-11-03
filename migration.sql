@@ -13,8 +13,11 @@ CREATE TABLE `tb_warranty` (
   `warranty_lot` varchar(150) DEFAULT NULL,
   `warranty_shop_name` varchar(150) DEFAULT NULL,
   `warranty_buy_date` DATE DEFAULT NULL,
+  `warranty_bill_reciept_image` varchar(150) DEFAULT NULL,
   `warranty_why_know_yuwell` varchar(300) DEFAULT NULL,
   `warranty_decision_buy_because` varchar(300) DEFAULT NULL,
+  `warranty_created_at` datetime DEFAULT NULL,
+  `warranty_updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`warranty_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -291,3 +294,10 @@ INSERT INTO `tb_repair_status`
 
 -- ALTER TABLE tb_service_report
 -- ADD service_report_repair_status_id int(11) DEFAULT NULL AFTER service_report_engineer_sign_date; 
+
+-- ALTER TABLE tb_warranty
+-- ADD warranty_created_at datetime DEFAULT NULL AFTER warranty_decision_buy_because; 
+-- ALTER TABLE tb_warranty
+-- ADD warranty_updated_at datetime DEFAULT NULL AFTER warranty_created_at; 
+-- ALTER TABLE tb_warranty
+-- ADD warranty_bill_reciept_image VARCHAR(150) DEFAULT NULL AFTER warranty_buy_date; 

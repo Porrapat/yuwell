@@ -9,6 +9,7 @@
 <body>
 
     @include('frontend.inc_menu')
+    @inject('carbon', 'Carbon\Carbon')
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -38,6 +39,70 @@
     </script>
     @endif
 
+    @if ($found_warranty)
+    <script type="text/javascript">
+        swal.fire({
+            icon:'success',
+            title:'Warranty Found!',
+            text:"คุณ {{ $found_warranty->warranty_name }} {{ $found_warranty->warranty_surname }} คุณได้ลงทะเบียน warranty ไปแล้วเมื่อวันที่ {{ $carbon::parse($found_warranty->warranty_created_at)->format('d F Y') }}",
+            type:'success'
+        }).then((value) => {
+        }).catch(swal.noop);
+    </script>
+    @endif
+
+    <script>
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#warranty_bill_reciept_image_show_image')
+                        .attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    <style>
+        .header .col-left-down {
+            width: 50%;
+            float: left;
+            position: relative;
+        }
+        .header .col-left-down .has-search {
+            width: 60%;
+            margin-top: 0px;
+            position: relative;
+        }
+        .header .col-left-down .has-search span {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+        .header .col-left-down .has-search .form-control {
+            font-weight: 300;
+        }
+
+        .form-warranty form ul li {
+            width: 25%;
+            height: 70px;
+            float: left;
+        }
+
+        @media only screen and (max-width: 980px) {
+            .form-warranty form ul li {
+                width: 50%;
+                height: 100px;
+                float: left;
+            }
+        }
+
+        #warranty_bill_reciept_image_show_image {
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+
     <div class="wrapper">
         <div class="container">
             <div class="row">
@@ -47,17 +112,6 @@
                             <div class="col-left">
                                 <div class="topic-head">Warranty <span>registration</span></div>
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                            </div>
-                            <div class="col-right">
-                                <form id="my_form" action="{{ url('/warranty') }}" method="GET">
-                                    <div class="form-group has-search">
-                                        <a href="javascript:{}" onclick="document.getElementById('my_form').submit();"><span class="fa fa-search form-control-feedback" style="color:#ccc"></span></a>
-                                        <input type="text" id="serial_number" name="serial_number" class="form-control" placeholder="Search serial number">
-                                        @if ($param == true && $found_serial == null)
-                                            <div style="font-size:10px; color:red">Cannot found this serial number</div>
-                                        @endif
-                                    </div>
-                                </form>
                             </div>
                         </div>
 
@@ -71,8 +125,71 @@
                             </div>
                         @endif
 
-                        <form action="{{ url('warranty') }}" method="POST">
+                        <div class="header">
+                            <div class="col-left-down">
+                                <form id="my_form" action="{{ url('/warranty') }}" method="GET">
+                                    <div class="form-group has-search">
+                                        <a href="javascript:{}" onclick="document.getElementById('my_form').submit();"><span class="fa fa-search form-control-feedback" style="color:#ccc"></span></a>
+                                        <input type="text" id="serial_number" name="serial_number" class="form-control" value="{{ Request::get('serial_number') }}" placeholder="Search serial number">
+                                        @if ($param == true && $found_serial == null)
+                                            <div style="font-size:10px; color:red">Cannot found this serial number</div>
+                                        @endif
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        @if (!$found_warranty)
+                        <form action="{{ url('warranty') }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">สินค้า <span>*</span></label>
+                                            @if($disabled)
+                                                <input type="text" class="form-control" name="warranty_product_name" readonly style="background-color:#ccc" />
+                                            @else
+                                                <input type="text" class="form-control" name="warranty_product_name" readonly style="background-color:#ccc" value="{{ $found_serial->serial_number_product_name }}" />
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">รุ่น <span>*</span></label>
+                                            @if($disabled)
+                                                <input type="text" class="form-control" name="warranty_type_name" readonly style="background-color:#ccc" />
+                                            @else
+                                                <input type="text" class="form-control" name="warranty_type_name" readonly style="background-color:#ccc" value="{{ $found_serial->serial_number_type_name }}" />
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Serial no. <span>*</span></label>
+                                        @if($disabled)
+                                            <input type="text" name="warranty_serial_number" class="form-control" readonly style="background-color:#ccc" >
+                                        @else
+                                            <input type="text" name="warranty_serial_number" class="form-control" readonly style="background-color:#ccc" value="{{ $found_serial->serial_number_no }}" >
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">LOT <span>*</span></label>
+                                        @if($disabled)
+                                            <input type="text" name="warranty_lot" class="form-control" readonly style="background-color:#ccc" >
+                                        @else
+                                            <input type="text" name="warranty_lot" class="form-control" readonly style="background-color:#ccc" value="{{ $found_serial->serial_number_lot }}" >
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3">
@@ -129,54 +246,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="mb-3">
-                                        <div class="mb-3">
-                                            <label class="form-label">สินค้า <span>*</span></label>
-                                            @if($disabled)
-                                                <input type="text" class="form-control" name="warranty_product_name" readonly style="background-color:#ccc" />
-                                            @else
-                                                <input type="text" class="form-control" name="warranty_product_name" readonly style="background-color:#ccc" value="{{ $found_serial->serial_number_product_name }}" />
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="mb-3">
-                                        <div class="mb-3">
-                                            <label class="form-label">รุ่น <span>*</span></label>
-                                            @if($disabled)
-                                                <input type="text" class="form-control" name="warranty_type_name" readonly style="background-color:#ccc" />
-                                            @else
-                                                <input type="text" class="form-control" name="warranty_type_name" readonly style="background-color:#ccc" value="{{ $found_serial->serial_number_type_name }}" />
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Serial no. <span>*</span></label>
-                                        @if($disabled)
-                                            <input type="text" name="warranty_serial_number" class="form-control" readonly style="background-color:#ccc" >
-                                        @else
-                                            <input type="text" name="warranty_serial_number" class="form-control" readonly style="background-color:#ccc" value="{{ $found_serial->serial_number_no }}" >
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">LOT <span>*</span></label>
-                                        @if($disabled)
-                                            <input type="text" name="warranty_lot" class="form-control" readonly style="background-color:#ccc" >
-                                        @else
-                                            <input type="text" name="warranty_lot" class="form-control" readonly style="background-color:#ccc" value="{{ $found_serial->serial_number_lot }}" >
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3">
@@ -201,6 +271,19 @@
                                             @endif
                                             <span class="input-group-addon"><i class="bi bi-calendar3"></i></span>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">อัพโหลดบิลใบเสร็จ <span>*</span></label>
+                                        @if($disabled)
+                                            <input class="form-control" accept="image/*" name="warranty_bill_image" type="file" readonly style="background: #ccc" />
+                                        @else
+                                            <input class="form-control" accept="image/*" id="warranty_bill_image" name="warranty_bill_image" type="file" onchange="readFile(this);" />
+                                        @endif
+                                    </div>
+                                    <div id="warranty_bill_reciept_image_show">
+                                        <img id="warranty_bill_reciept_image_show_image" src="https://via.placeholder.com/150" alt="your image" />
                                     </div>
                                 </div>
                             </div>
@@ -264,6 +347,7 @@
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" name="warranty_why_know_yuwell[]" id="repairCheckbox10" value="อื่นๆ">
                                         <label class="form-check-label" for="repairCheckbox10">อื่นๆ</label>
+                                        <input type="text" class="form-control" name="warranty_why_know_yuwell_other" value="" />
                                     </div>
                                 </li>
                             </ul>
@@ -283,14 +367,14 @@
                                 </li>
                                 <li>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="warranty_decision_buy_because[]" id="repairCheckbox13" value="ญาติ/เพื่อนแนะนำ (Family/Friends recommendation)">
-                                        <label class="form-check-label" for="repairCheckbox13">ญาติ/เพื่อนแนะนำ (Family/Friends recommendation)</label>
+                                        <input class="form-check-input" type="checkbox" name="warranty_decision_buy_because[]" id="repairCheckbox14" value="พนักงานขาย (Sales/counterman)">
+                                        <label class="form-check-label" for="repairCheckbox14">พนักงานขาย (Sales/counterman)</label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" name="warranty_decision_buy_because[]" id="repairCheckbox14" value="พนักงานขาย (Sales/counterman)">
-                                        <label class="form-check-label" for="repairCheckbox14">พนักงานขาย (Sales/counterman)</label>
+                                        <input class="form-check-input" type="checkbox" name="warranty_decision_buy_because[]" id="repairCheckbox13" value="ญาติ/เพื่อนแนะนำ (Family/Friends recommendation)">
+                                        <label class="form-check-label" for="repairCheckbox13">ญาติ/เพื่อนแนะนำ (Family/Friends recommendation)</label>
                                     </div>
                                 </li>
                                 <li>
@@ -305,6 +389,13 @@
                                         <label class="form-check-label" for="repairCheckbox16">เปลี่ยนเครื่องใหม่ (Want to change to a new device)</label>
                                     </div>
                                 </li>
+                                <li>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="warranty_decision_buy_because[]" id="repairCheckbox17" value="อื่นๆ">
+                                        <label class="form-check-label" for="repairCheckbox17">อื่นๆ</label>
+                                        <input type="text" class="form-control" name="warranty_decision_buy_because_other" value="" />
+                                    </div>
+                                </li>
                             </ul>
                             <div class="text-center border-top p-3">
                                 @if($disabled)
@@ -313,6 +404,7 @@
                                 @endif
                             </div>
                         </form>
+                        @endif
                     </div>
                 </div>
             </div>
