@@ -193,9 +193,21 @@ class FrontendController extends Controller
     public function warranty(Request $request)
     {
         $found_serial = false;
+        $found_warranty = false;
         $param = false;
         if ($request->serial_number)
         {
+            $found_warranty = warranty::where('warranty_serial_number', $request->serial_number)->first();
+            if ($found_warranty)
+            {
+                $disabled = false;
+            }
+            else
+            {
+                $disabled = true;
+            }
+            $param = true;
+
             $found_serial = serialnumber::where('serial_number_no', $request->serial_number)->first();
             if($found_serial)
             {
@@ -212,7 +224,7 @@ class FrontendController extends Controller
             $param = false;
             $disabled = true;
         }
-        return view('frontend.warranty', compact('disabled', 'found_serial', 'param'));
+        return view('frontend.warranty', compact('disabled', 'found_serial', 'found_warranty', 'param'));
     }
 
     public function warranty_store(Request $request)
@@ -227,14 +239,11 @@ class FrontendController extends Controller
             'warranty_product_name' => 'required',
             'warranty_type_name' => 'required',
             'warranty_lot' => 'required',
-            'warranty_shop_name' => 'required'
+            'warranty_shop_name' => 'required',
+            'warranty_bill_image' => 'required|mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
-        $warranty = warranty::where('warranty_serial_number', $request->warranty_serial_number)->first();
-        if(!$warranty)
-        {
-            $warranty = new warranty;
-        }
+        $warranty = new warranty;
         $warranty->warranty_serial_number = $request->warranty_serial_number;
         $warranty->warranty_name = $request->warranty_name;
         $warranty->warranty_surname = $request->warranty_surname;
@@ -253,11 +262,28 @@ class FrontendController extends Controller
         if($request->warranty_why_know_yuwell && is_array($request->warranty_why_know_yuwell))
         {
             $warranty->warranty_why_know_yuwell = implode(",", $request->warranty_why_know_yuwell);
+            if($request->warranty_why_know_yuwell_other)
+            {
+                $warranty->warranty_why_know_yuwell .= ",".$request->warranty_why_know_yuwell_other;
+            }
         }
         if($request->warranty_decision_buy_because && is_array($request->warranty_decision_buy_because))
         {
             $warranty->warranty_decision_buy_because = implode(",", $request->warranty_decision_buy_because);
+            if($request->warranty_decision_buy_because_other)
+            {
+                $warranty->warranty_decision_buy_because .= ",".$request->warranty_decision_buy_because_other;
+            }
         }
+        $warranty->warranty_created_at = Carbon::now();
+
+        if($request->file('warranty_bill_image')){
+            $file= $request->file('warranty_bill_image');
+            $filename= date('YmdHi').rand(100,999).".".$file->getClientOriginalExtension();
+            $file->move(public_path('img/warranty'), $filename);
+            $warranty->warranty_bill_reciept_image = $filename;
+        }
+
         $warranty->save();
 
         return redirect('/warranty')->with('success', 'Data is successfully saved');

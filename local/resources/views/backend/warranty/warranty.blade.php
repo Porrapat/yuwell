@@ -30,6 +30,7 @@
     <div class="card">
         <div class="card-header">
             <h5>warranty</h5>
+            <a href="{{ url('/admin/warranty/print-excel') }}" class="btn btn-success waves-effect"><i class="fa fa-plus"> </i> Print Excel</a>
         </div>
         <div class="card-block table-border-style">
             <div class="table-responsive">
@@ -50,6 +51,8 @@
                             <th class="text-center">Buy Date</th>
                             <th class="text-center">รู้จัก Yuwell จาก</th>
                             <th class="text-center">ตัดสินใจซื้อเพราะ</th>
+                            <th class="text-center">Picture</th>
+                            <th class="text-center">Created At</th>
                             <th class="text-center" width="20%">Action</th>
                         </tr>
                     </thead>
@@ -72,8 +75,17 @@
                             <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_why_know_yuwell}}</td>
                             <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_decision_buy_because}}</td>
 
+                            @if ($item->warranty_bill_reciept_image)
+                                <td style="text-align: center; vertical-align: middle;"> <img src="{{ url('local/public/img/warranty/'.$item->warranty_bill_reciept_image) }}" width="100" height="100" /></td>
+                            @else
+                                <td style="text-align: center; vertical-align: middle;"></td>
+                            @endif
+                            
+                            <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_created_at}} </td>
+
                             <td style="text-align: center; vertical-align: middle;">
                                 <div class="row">
+                                    <a href="{{ route('warranty.edit',$item->warranty_id )}}" class="btn btn-warning waves-effect"><i class="fa fa-edit"></i></a>
                                     <button type="button" class="btn btn-danger" onclick="del({{$item->warranty_id }})"><i class="fa fa-trash-o"></i> </button>
                                 </div>
 

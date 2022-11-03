@@ -69,6 +69,7 @@ Route::resource('/admin/services', 'ServicesController');
 
 Route::resource('/admin/repair-status', 'RepairStatusController');
 Route::resource('/admin/serial-number', 'SerialNumberController');
+Route::get('/admin/warranty/print-excel', 'WarrantyController@printExcel');
 Route::resource('/admin/warranty', 'WarrantyController');
 Route::resource('/admin/service-report', 'ServiceReportController');
 Route::get('/admin/service-report/{id}/edit-only-status', 'ServiceReportController@editOnlyStatus');
