@@ -94,6 +94,12 @@ class WarrantyController extends Controller
         }
     }
 
+    public function print(Request $request, $id)
+    {
+        $warranty = warranty::find($id);
+        return view('backend.warranty.warranty-print', compact('warranty'));
+    }
+
     public function printExcel()
     {
         $spreadsheet = new Spreadsheet();

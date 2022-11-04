@@ -77,7 +77,7 @@
                             <td style="text-align: center; vertical-align: middle;">
                                 <div class="row">
                                     <a href="{{ url('/admin/service-report/'.$item->service_report_id.'/edit-only-status' ) }}" class="btn btn-info waves-effect"
-                                        data-target="#Modalupdate">เพิ่มเลขซ่อมและสถานะ</a>
+                                        data-target="#Modalupdate">เปลี่ยนสถานะ</a>
                                     <!-- <a href="{{ route('service-report.edit',$item->service_report_id )}}" class="btn btn-warning waves-effect"
                                         data-target="#Modalupdate"><i class="fa fa-edit"></i></a> -->
                                     <button type="button" class="btn btn-danger" onclick="del({{$item->service_report_id }})"><i class="fa fa-trash-o"></i> </button>
@@ -98,5 +98,52 @@
     </div>
     <!-- end panel -->
 </div>
+
+
+<form method="post" id="delete">
+    @csrf
+    @method('DELETE')
+</form>
+
+<script>
+    function del(id) {
+        var urlaction = '{{url('admin/service-report')}}' + '/' + id;
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'คุณแน่ใจหรือ?',
+            text: "ข้อมูลจะไม่สามารถกู้กลับมาได้อีก!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'ยืนยัน',
+            cancelButtonText: 'ยกเลิก',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $("#delete").attr('action', urlaction);
+                $("#delete").submit();
+                swalWithBootstrapButtons.fire(
+                    'ลบข้อมูลสำเร็จ!',
+                    'ข้อมูลถูกลบออกจากระบบแล้ว',
+                    'success'
+                )
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'ยกเลิก',
+                    'ยกเลิกการลบข้อมูล',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 
 @endsection

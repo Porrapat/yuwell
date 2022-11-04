@@ -80,11 +80,12 @@
                             @else
                                 <td style="text-align: center; vertical-align: middle;"></td>
                             @endif
-                            
+
                             <td style="text-align: center; vertical-align: middle;"> {{$item->warranty_created_at}} </td>
 
                             <td style="text-align: center; vertical-align: middle;">
                                 <div class="row">
+                                    <a href="{{ url('/admin/warranty/print/' . $item->warranty_id) }}" class="btn btn-info waves-effect">Print</a>
                                     <a href="{{ route('warranty.edit',$item->warranty_id )}}" class="btn btn-warning waves-effect"><i class="fa fa-edit"></i></a>
                                     <button type="button" class="btn btn-danger" onclick="del({{$item->warranty_id }})"><i class="fa fa-trash-o"></i> </button>
                                 </div>

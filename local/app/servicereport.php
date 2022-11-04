@@ -14,4 +14,9 @@ class servicereport extends Model
     {
         return $this->belongsTo(repairstatus::class, 'service_report_repair_status_id');
     }
+
+    public function service_report_images()
+    {
+        return $this->hasMany(servicereportimage::class, 'service_report_id');
+    }
 }

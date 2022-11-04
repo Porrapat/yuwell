@@ -18,6 +18,7 @@ use App\producttype;
 use App\serialnumber;
 use App\warranty;
 use App\servicereport;
+use App\servicereportimage;
 use DB;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -321,14 +322,12 @@ class FrontendController extends Controller
             'service_report_name' => 'required',
             'service_report_surname' => 'required',
             'service_report_address' => 'required',
-            'service_report_service_date' => 'required'
+            'service_report_service_date' => 'required',
+            'service_report_bill_image' => 'required',
+            'service_report_bill_image.*' => 'mimes:jpg,png,jpeg,gif,svg'
         ]);
 
-        $servicereport = servicereport::where('service_report_serial_number', $request->service_report_serial_number)->first();
-        if(!$servicereport)
-        {
-            $servicereport = new servicereport;
-        }
+        $servicereport = new servicereport;
         $servicereport->service_report_serial_number = $request->service_report_serial_number;
         $servicereport->service_report_name = $request->service_report_name;
         $servicereport->service_report_surname = $request->service_report_surname;
@@ -337,33 +336,40 @@ class FrontendController extends Controller
         {
             $servicereport->service_report_service_date = Carbon::createFromFormat('d-m-Y', $request->service_report_service_date);
         }
-        if($request->service_report_service_type && is_array($request->service_report_service_type))
+
+        $servicereport->service_report_email = $request->service_report_email;
+        $servicereport->service_report_shop_name = $request->service_report_shop_name;
+        if($request->service_report_buy_date)
         {
-            $servicereport->service_report_service_type = implode(",", $request->service_report_service_type);
+            $servicereport->service_report_buy_date = Carbon::createFromFormat('d-m-Y', $request->service_report_buy_date);
         }
+        $servicereport->service_report_product_name = $request->service_report_product_name;
+        $servicereport->service_report_type_name = $request->service_report_type_name;
+        $servicereport->service_report_lot = $request->service_report_lot;
+
         $servicereport->service_report_problem = $request->service_report_problem;
-        $servicereport->service_report_list_1 = $request->service_report_list_1;
-        $servicereport->service_report_quantity_1 = $request->service_report_quantity_1;
-        $servicereport->service_report_how_to_fix_problem = $request->service_report_how_to_fix_problem;
-        $servicereport->service_report_note = $request->service_report_note;
-        $servicereport->service_report_result_type = $request->service_report_result_type;
-        $servicereport->service_report_result_type_not_good = $request->service_report_result_type_not_good;
 
-        $servicereport->service_report_customer_sign_name = $request->service_report_customer_sign_name;
-
-        if($request->service_report_customer_sign_date)
-        {
-            $servicereport->service_report_customer_sign_date = Carbon::createFromFormat('d-m-Y', $request->service_report_customer_sign_date);
-        }
-        $servicereport->service_report_engineer_sign_name = $request->service_report_engineer_sign_name;
-        if($request->service_report_engineer_sign_date)
-        {
-            $servicereport->service_report_engineer_sign_date = Carbon::createFromFormat('d-m-Y', $request->service_report_engineer_sign_date);
-        }
         $servicereport->service_report_repair_status_id = 1;
+
         $servicereport->save();
 
-        return redirect('/service-report')->with('success', 'Data is successfully saved');
+        if($request->hasfile('service_report_bill_image'))
+        {
+            foreach($request->file('service_report_bill_image') as $key => $file)
+            {
+                $filename= date('YmdHi').rand(100,999).".".$file->getClientOriginalExtension();
+                $file->move(public_path('img/servicereport'), $filename);
+                $servicereportimage = new servicereportimage;
+                $servicereportimage->service_report_id = $servicereport->service_report_id;
+                $servicereportimage->service_report_image_name = $filename;
+                $servicereportimage->save();
+            }
+        }
+
+        $servicereport->service_report_repair_code = str_pad($servicereport->service_report_id, 5, '0', STR_PAD_LEFT);
+        $servicereport->save();
+
+        return redirect('/service-report')->with('success', 'Data is successfully saved. Your code is '.$servicereport->service_report_repair_code);
     }
 
  

@@ -32,19 +32,16 @@ CREATE TABLE `tb_service_report` (
   `service_report_surname` VARCHAR(150) DEFAULT NULL,
   `service_report_telephone` VARCHAR(150) DEFAULT NULL,
   `service_report_address` VARCHAR(400) DEFAULT NULL,
+
+  `service_report_email` VARCHAR(150) DEFAULT NULL,
+  `service_report_shop_name` VARCHAR(150) DEFAULT NULL,
+  `service_report_buy_date` DATE DEFAULT NULL,
+  `service_report_product_name` VARCHAR(150) DEFAULT NULL,
+  `service_report_type_name` VARCHAR(150) DEFAULT NULL,
+  `service_report_lot` VARCHAR(150) DEFAULT NULL,
+
   `service_report_service_date` DATE DEFAULT NULL,
-  `service_report_service_type` varchar(150) DEFAULT NULL,
   `service_report_problem` varchar(150) DEFAULT NULL,
-  `service_report_list_1` varchar(150) DEFAULT NULL,
-  `service_report_quantity_1` varchar(150) DEFAULT NULL,
-  `service_report_how_to_fix_problem` varchar(150) DEFAULT NULL,
-  `service_report_note` varchar(150) DEFAULT NULL,
-  `service_report_result_type` varchar(150) DEFAULT NULL,
-  `service_report_result_type_not_good` varchar(150) DEFAULT NULL,
-  `service_report_customer_sign_name` varchar(150) DEFAULT NULL,
-  `service_report_customer_sign_date` DATE DEFAULT NULL,
-  `service_report_engineer_sign_name` varchar(150) DEFAULT NULL,
-  `service_report_engineer_sign_date` DATE DEFAULT NULL,
   `service_report_repair_status_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`service_report_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -288,6 +285,14 @@ INSERT INTO `tb_repair_status`
   'ปิดงาน'
 );
 
+DROP TABLE IF EXISTS `tb_service_report_image`;
+
+CREATE TABLE `tb_service_report_image` (
+  `service_report_image_id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_report_id` int(11) NOT NULL,
+  `service_report_image_name` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`service_report_image_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ALTER TABLE tb_service_report
 -- ADD service_report_repair_code VARCHAR(150) DEFAULT NULL AFTER service_report_id; 
@@ -301,3 +306,23 @@ INSERT INTO `tb_repair_status`
 -- ADD warranty_updated_at datetime DEFAULT NULL AFTER warranty_created_at; 
 -- ALTER TABLE tb_warranty
 -- ADD warranty_bill_reciept_image VARCHAR(150) DEFAULT NULL AFTER warranty_buy_date; 
+
+-- ALTER TABLE tb_service_report DROP COLUMN service_report_service_type;
+-- ALTER TABLE tb_service_report DROP COLUMN service_report_list_1;
+-- ALTER TABLE tb_service_report DROP COLUMN service_report_quantity_1;
+-- ALTER TABLE tb_service_report DROP COLUMN service_report_how_to_fix_problem;
+-- ALTER TABLE tb_service_report DROP COLUMN service_report_note;
+-- ALTER TABLE tb_service_report DROP COLUMN service_report_result_type;
+-- ALTER TABLE tb_service_report DROP COLUMN service_report_result_type_not_good;
+-- ALTER TABLE tb_service_report DROP COLUMN service_report_customer_sign_name;
+-- ALTER TABLE tb_service_report DROP COLUMN service_report_customer_sign_date;
+-- ALTER TABLE tb_service_report DROP COLUMN service_report_engineer_sign_name;
+-- ALTER TABLE tb_service_report DROP COLUMN service_report_engineer_sign_date;
+
+-- ALTER TABLE tb_service_report ADD service_report_email VARCHAR(150) DEFAULT NULL AFTER service_report_address; 
+-- ALTER TABLE tb_service_report ADD service_report_shop_name VARCHAR(150) DEFAULT NULL AFTER service_report_email; 
+-- ALTER TABLE tb_service_report ADD service_report_buy_date DATE DEFAULT NULL AFTER service_report_shop_name; 
+-- ALTER TABLE tb_service_report ADD service_report_product_name VARCHAR(150) DEFAULT NULL AFTER service_report_buy_date; 
+-- ALTER TABLE tb_service_report ADD service_report_type_name VARCHAR(150) DEFAULT NULL AFTER service_report_product_name; 
+-- ALTER TABLE tb_service_report ADD service_report_lot VARCHAR(150) DEFAULT NULL AFTER service_report_type_name; 
+
