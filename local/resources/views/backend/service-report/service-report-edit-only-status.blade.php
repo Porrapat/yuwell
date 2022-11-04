@@ -58,7 +58,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <strong>Repair Code</strong>
-                                    <input type="text" name="service_report_repair_code" class="form-control" value="{{ $servicereport->service_report_repair_code }}">
+                                    <input type="text" name="service_report_repair_code" class="form-control" value="{{ $servicereport->service_report_repair_code }}" style="background-color:#ccc" readonly>
                                 </div>
                             </div>
                             <div class="col-md-12">

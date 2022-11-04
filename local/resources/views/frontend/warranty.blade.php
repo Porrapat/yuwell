@@ -64,23 +64,22 @@
         }
     </script>
     <style>
-        .header .col-left-down {
-            width: 50%;
-            float: left;
-            position: relative;
+        .form-search-serial
+        {
+            width:80%;
+            display: inline-block;
         }
-        .header .col-left-down .has-search {
-            width: 60%;
-            margin-top: 0px;
-            position: relative;
+
+        .my-button-search
+        {
+            display: inline-block;
+            margin-top:-6px;
         }
-        .header .col-left-down .has-search span {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-        }
-        .header .col-left-down .has-search .form-control {
-            font-weight: 300;
+
+        .not-found-detail
+        {
+            font-size:10px;
+            color:red;
         }
 
         .form-warranty form ul li {
@@ -126,13 +125,13 @@
                         @endif
 
                         <div class="header">
-                            <div class="col-left-down">
+                            <div class="col-md-6">
                                 <form id="my_form" action="{{ url('/warranty') }}" method="GET">
                                     <div class="form-group has-search">
-                                        <a href="javascript:{}" onclick="document.getElementById('my_form').submit();"><span class="fa fa-search form-control-feedback" style="color:#ccc"></span></a>
-                                        <input type="text" id="serial_number" name="serial_number" class="form-control" value="{{ Request::get('serial_number') }}" placeholder="Search serial number">
+                                        <input type="text" id="serial_number" name="serial_number" class="form-control form-search-serial" value="{{ Request::get('serial_number') }}" placeholder="Search serial number">
+                                        <button type="submit" class="btn btn-danger my-button-search">ค้นหา</button>
                                         @if ($param == true && $found_serial == null)
-                                            <div style="font-size:10px; color:red">Cannot found this serial number</div>
+                                        <div class="not-found-detail">Cannot found this serial number</div>
                                         @endif
                                     </div>
                                 </form>

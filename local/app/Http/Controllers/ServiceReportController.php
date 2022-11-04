@@ -21,7 +21,7 @@ class ServiceReportController extends Controller
 
     public function show(Request $request, $id)
     {
-        $servicereport = servicereport::find($id);
+        $servicereport = servicereport::with('service_report_images')->find($id);
         return view('backend.service-report.service-report-show', compact('servicereport'));
     }
 
@@ -41,9 +41,14 @@ class ServiceReportController extends Controller
     public function updateOnlyStatus(Request $request, $id)
     {
         $servicereport = servicereport::where('service_report_id', $id)->first();
-        $servicereport->service_report_repair_code = $request->service_report_repair_code;
         $servicereport->service_report_repair_status_id = $request->service_report_repair_status_id;
         $servicereport->save();
         return redirect('admin/service-report')->withSuccess('Service Report Has Been Saved!');
+    }
+
+    public function destroy($id)
+    {
+        servicereport::where('service_report_id', $id)->delete();
+        return back();
     }
 }
