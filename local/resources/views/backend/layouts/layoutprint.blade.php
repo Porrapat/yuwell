@@ -13,7 +13,7 @@
     @endif
     <link href="{{ asset('css/print-report-paper-css.css') }}" rel="stylesheet">
     <style>
-    @page { size: A4 }
+    @page { size: A5 }
 
     .sheet {
         position:relative;
@@ -37,7 +37,7 @@
     }
 
     .logo {
-        margin-left: 45px;
+        margin-left: 25px;
         display: flex;
         align-items: center;
     }
@@ -62,12 +62,19 @@
     .page-title {
         text-align: right;
         font-size: 28px;
+        margin-top:20px;
+        margin-right:16px;
+    }
+
+    .content-footer {
+        margin-top:40px;
+        font-size: 14px;
     }
     </style>
 
 </head>
 
-<body class="A4">
+<body class="A5">
      @yield('content')
 </body>
 
