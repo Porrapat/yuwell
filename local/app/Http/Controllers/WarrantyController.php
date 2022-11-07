@@ -8,6 +8,9 @@ use App\warranty;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+use App;
+
 class WarrantyController extends Controller
 {
     /**
@@ -97,7 +100,15 @@ class WarrantyController extends Controller
     public function print(Request $request, $id)
     {
         $warranty = warranty::find($id);
-        return view('backend.warranty.warranty-print', compact('warranty'));
+
+        $pdf = Pdf::loadView('backend.warranty.warranty-print', compact('warranty'));
+        return $pdf->download('warranty.pdf');
+
+        // $pdf = App::make('dompdf.wrapper');
+        // $pdf->loadHTML('<h1>Test</h1>');
+        // return $pdf->stream();
+
+        // return view('backend.warranty.warranty-print', compact('warranty'));
     }
 
     public function printExcel()
