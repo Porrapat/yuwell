@@ -76,7 +76,7 @@ Route::resource('/admin/warranty', 'WarrantyController');
 Route::resource('/admin/service-report', 'ServiceReportController');
 Route::get('/admin/service-report/{id}/edit-only-status', 'ServiceReportController@editOnlyStatus');
 Route::patch('/admin/service-report/{id}/update-only-status', 'ServiceReportController@updateOnlyStatus');
-
+Route::get('/admin/service-report/print/{id}', 'ServiceReportController@print');
 
 
 Route::get('/clc', function() {

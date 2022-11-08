@@ -9,6 +9,8 @@
 @endsection
 @section('content')
 
+@inject('carbon', 'Carbon\Carbon')
+
 <div class="page-header card">
     <div class="card-block front-icon-breadcrumb">
         <h5 class="m-b-10">Service Report</h5>
@@ -23,7 +25,6 @@
         </ul>
     </div>
 </div>
-
 
 <div id="content" class="content">
     <!-- begin panel -->
@@ -61,9 +62,16 @@
                                     <input type="text" name="service_report_repair_code" class="form-control" value="{{ $servicereport->service_report_repair_code }}" style="background-color:#ccc" readonly>
                                 </div>
                             </div>
+                            
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <strong>Service Status</strong>
+                                    <strong>วันที่รับงาน</strong>
+                                    <input type="text" id="service_report_buy_date" name="service_report_buy_date" class="form-control" value="{{ ($servicereport->service_report_buy_date) ? $carbon::parse($servicereport->service_report_buy_date)->format('d/m/Y') : null }}">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>สถานะ</strong>
                                     <select id="service_report_repair_status_id" name="service_report_repair_status_id" class="form-control custom-select">
 
                                         @foreach($repairstatus as $rs)
@@ -74,6 +82,49 @@
                                             >{{ $rs->repair_status_name }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>วันที่ปิดงาน</strong>
+                                    <input type="text" id="service_report_close_date" name="service_report_close_date" class="form-control" value="{{ ($servicereport->service_report_close_date) ? $carbon::parse($servicereport->service_report_close_date)->format('d/m/Y') : null }}">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>วันส่งเครื่องคืน</strong>
+                                    <input type="text" id="service_report_return_date" name="service_report_return_date" class="form-control" value="{{ ($servicereport->service_report_return_date) ? $carbon::parse($servicereport->service_report_return_date)->format('d/m/Y') : null }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>สาเหตุ</strong>
+                                    <input type="text" name="service_report_problem" class="form-control" value="{{ $servicereport->service_report_problem }}" style="background-color:#ccc" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>การแก้ไขปัญหา</strong>
+                                    <input type="text" name="service_report_how_to_fix_problem" class="form-control" value="{{ $servicereport->service_report_how_to_fix_problem }}">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>อะไหล่ที่เปลี่ยน</strong>
+                                    <input type="text" name="service_report_replacement_parts" class="form-control" value="{{ $servicereport->service_report_replacement_parts }}">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>ค่าใช้จ่าย</strong>
+                                    <input type="text" name="service_report_expense" class="form-control" value="{{ $servicereport->service_report_expense }}">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>หมายเหตุ</strong>
+                                    <input type="text" name="service_report_note" class="form-control" value="{{ $servicereport->service_report_note }}">
                                 </div>
                             </div>
                         </div>
@@ -90,5 +141,6 @@
     </div>
     <!-- end panel -->
 </div>
+
 
 @endsection

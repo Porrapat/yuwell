@@ -1,4 +1,4 @@
-@extends('backend.layouts.layoutprint', ['title' => 'Warranty'])
+@extends('backend.layouts.layoutprint_warranty', ['title' => 'Warranty'])
 @section('content')
 <style>
     #mytable {
@@ -82,7 +82,7 @@
                                 <td><strong>วันที่รับประกัน</strong></td>
                                 <td>{{  $warranty->warranty_buy_date }}<hr class='dotted' /></td>
                                 <td><strong>วันที่หมดประกัน</strong></td>
-                                <td>{{  $warranty->warranty_buy_date }}<hr class='dotted' /></td>
+                                <td>&nbsp;<hr class='dotted' /></td>
                             </tr>
                             <tr>
                                 <td><strong>ชื่อ - สกุล</strong></td>

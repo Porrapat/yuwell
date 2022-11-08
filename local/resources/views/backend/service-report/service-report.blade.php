@@ -76,6 +76,8 @@
                             </td>
                             <td style="text-align: center; vertical-align: middle;">
                                 <div class="row">
+
+                                    <a href="{{ url('/admin/service-report/print/'.$item->service_report_id) }}" class="btn btn-info waves-effect">Print</a>
                                     <a href="{{ url('/admin/service-report/'.$item->service_report_id.'/edit-only-status' ) }}" class="btn btn-info waves-effect"
                                         data-target="#Modalupdate">เปลี่ยนสถานะ</a>
                                     <!-- <a href="{{ route('service-report.edit',$item->service_report_id )}}" class="btn btn-warning waves-effect"
