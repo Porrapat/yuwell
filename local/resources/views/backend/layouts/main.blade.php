@@ -112,6 +112,26 @@
     <![endif]-->
     @include('backend.layouts.main_script')
 
+    <script>
+        $(document).ready(function () {
+            $("#service_report_buy_date").datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                format: 'dd/mm/yyyy',
+            });
+            $("#service_report_close_date").datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                format: 'dd/mm/yyyy',
+            });
+            $("#service_report_return_date").datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                format: 'dd/mm/yyyy',
+            });
+        });
+    </script>
+
 	@yield('script')
 </body>
 

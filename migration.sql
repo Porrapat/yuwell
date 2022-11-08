@@ -43,9 +43,15 @@ CREATE TABLE `tb_service_report` (
   `service_report_service_date` DATE DEFAULT NULL,
   `service_report_problem` varchar(150) DEFAULT NULL,
   `service_report_repair_status_id` int(11) DEFAULT NULL,
+
+  `service_report_close_date` DATE DEFAULT NULL,
+  `service_report_return_date` DATE DEFAULT NULL,
+  `service_report_how_to_fix_problem` varchar(300) DEFAULT NULL,
+  `service_report_replacement_parts` varchar(300) DEFAULT NULL,
+  `service_report_expense` varchar(150) DEFAULT NULL,
+  `service_report_note` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`service_report_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 
 
 DROP TABLE IF EXISTS `tb_serial_number`;
@@ -325,4 +331,11 @@ CREATE TABLE `tb_service_report_image` (
 -- ALTER TABLE tb_service_report ADD service_report_product_name VARCHAR(150) DEFAULT NULL AFTER service_report_buy_date; 
 -- ALTER TABLE tb_service_report ADD service_report_type_name VARCHAR(150) DEFAULT NULL AFTER service_report_product_name; 
 -- ALTER TABLE tb_service_report ADD service_report_lot VARCHAR(150) DEFAULT NULL AFTER service_report_type_name; 
+
+-- ALTER TABLE tb_service_report ADD service_report_close_date DATE DEFAULT NULL AFTER service_report_repair_status_id; 
+-- ALTER TABLE tb_service_report ADD service_report_return_date DATE DEFAULT NULL AFTER service_report_close_date; 
+-- ALTER TABLE tb_service_report ADD service_report_how_to_fix_problem varchar(300) DEFAULT NULL AFTER service_report_problem; 
+-- ALTER TABLE tb_service_report ADD service_report_replacement_parts varchar(300) DEFAULT NULL AFTER service_report_how_to_fix_problem; 
+-- ALTER TABLE tb_service_report ADD service_report_expense varchar(150) DEFAULT NULL AFTER service_report_replacement_parts; 
+-- ALTER TABLE tb_service_report ADD service_report_note varchar(300) DEFAULT NULL AFTER service_report_expense; 
 
