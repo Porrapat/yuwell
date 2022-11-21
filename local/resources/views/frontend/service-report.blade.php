@@ -264,24 +264,24 @@
                                 </div>
                             </div>
 
+                            @if($disabled)
+                            @else
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="form-check-label">อาการเสีย</label>
                                     <textarea class="form-control" rows="3" name="service_report_problem"></textarea>
                                 </div>
                             </div>
-
+                            @endif
+                            
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label class="form-label">รูปภาพ (สามารถเลือกได้หลายภาพ)</label>
                                         @if($disabled)
-                                            <input class="form-control" accept="image/*" id="service_report_bill_image" name="service_report_bill_image[]" type="file" readonly style="background: #ccc" multiple />
                                         @else
+                                            <label class="form-label">รูปภาพ (สามารถเลือกได้หลายภาพ)</label>
                                             <input class="form-control" accept="image/*" id="service_report_bill_image" name="service_report_bill_image[]" type="file" multiple />
                                         @endif
-                                    </div>
-                                    <div id="service_report_image_show">
                                     </div>
                                 </div>
                             </div>
@@ -303,33 +303,10 @@
     @include('frontend.scriptjs')
 
     <script>
-    $(function() {
-        // Multiple images preview with JavaScript
-        var previewImages = function(input, imgPreviewPlaceholder) {
-            if (input.files) {
-                var filesAmount = input.files.length;
-                for (i = 0; i < filesAmount; i++) {
-                    var reader = new FileReader();
-                    reader.onload = function(event) {
 
-                        var file = event.target;
-                        $("<span class=\"pip\">" +
-                            "<img class=\"imageThumb\" src=\"" + event.target.result + "\" title=\"" + event.target.name + "\"/>" +
-                            "<br/><span class=\"remove\">Remove image</span>" +
-                            "</span>").appendTo(imgPreviewPlaceholder);
+    FilePond.registerPlugin(FilePondPluginImagePreview);
+    $('#service_report_bill_image').filepond({storeAsFile: true, allowMultiple: true});
 
-                        $(".remove").click(function(){
-                            $(this).parent(".pip").remove();
-                        });
-                    }
-                    reader.readAsDataURL(input.files[i]);
-                }
-            }
-        };
-        $('#service_report_bill_image').on('change', function() {
-            previewImages(this, 'div#service_report_image_show');
-        });
-    });
     </script>
 </body>
 
