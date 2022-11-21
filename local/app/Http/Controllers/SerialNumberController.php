@@ -38,6 +38,7 @@ class SerialNumberController extends Controller
         $serialnumber->serial_number_product_name = $request['serial_number_product_name'];
         $serialnumber->serial_number_type_name = $request['serial_number_type_name'];
         $serialnumber->serial_number_lot = $request['serial_number_lot'];
+        $serialnumber->serial_number_year_from = $request['serial_number_year_from'];
         $serialnumber->save();
 
         return back()->withSuccess('New Serial Number Has Been Saved!');
@@ -55,6 +56,7 @@ class SerialNumberController extends Controller
         $serialnumber->serial_number_product_name = $request->serial_number_product_name;
         $serialnumber->serial_number_type_name = $request->serial_number_type_name;
         $serialnumber->serial_number_lot = $request->serial_number_lot;
+        $serialnumber->serial_number_year_from = $request->serial_number_year_from;
         $serialnumber->save();
 
         return redirect('admin/serial-number')->withSuccess('Repair Status Has Been Saved!');
@@ -84,6 +86,7 @@ class SerialNumberController extends Controller
                 $product_name = $sheet->getCell( 'B' . $row )->getValue();
                 $type_name = $sheet->getCell( 'C' . $row )->getValue();
                 $lot = $sheet->getCell( 'D' . $row )->getValue();
+                $year_from = $sheet->getCell( 'E' . $row )->getValue();
 
                 $found = serialnumber::where('serial_number_no', $serial_number)->first();
                 if (!$found) {
@@ -92,6 +95,7 @@ class SerialNumberController extends Controller
                     $serialnumber->serial_number_product_name = $product_name;
                     $serialnumber->serial_number_type_name = $type_name;
                     $serialnumber->serial_number_lot = $lot;
+                    $serialnumber->serial_number_year_from = $year_from ? $year_from : null;
                     $serialnumber->save();
                 }
             }

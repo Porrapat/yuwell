@@ -1,5 +1,6 @@
 @extends('backend.layouts.layoutprint_warranty', ['title' => 'Warranty'])
 @section('content')
+@inject('carbon', 'Carbon\Carbon')
 <style>
     #mytable {
         /* font-family: Arial, Helvetica, sans-serif; */
@@ -82,7 +83,9 @@
                                 <td><strong>วันที่รับประกัน</strong></td>
                                 <td>{{  $warranty->warranty_buy_date }}<hr class='dotted' /></td>
                                 <td><strong>วันที่หมดประกัน</strong></td>
-                                <td>&nbsp;<hr class='dotted' /></td>
+                                @if ($warranty->serialnumber && $warranty->serialnumber->serial_number_year_from != null)
+                                    <td>{{  $carbon->parse($warranty->warranty_buy_date)->addYears($warranty->serialnumber->serial_number_year_from)->format("Y-m-d") }}<hr class='dotted' /></td>
+                                @endif
                             </tr>
                             <tr>
                                 <td><strong>ชื่อ - สกุล</strong></td>

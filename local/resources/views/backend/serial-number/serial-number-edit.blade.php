@@ -61,6 +61,12 @@
                                     <input type="text" name="serial_number_lot" class="form-control" value="{{ $serialnumber->serial_number_lot }}">
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <strong>Year Warranty</strong>
+                                    <input type="number" name="serial_number_year_from" class="form-control" value="{{ $serialnumber->serial_number_year_from }}">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
