@@ -9,6 +9,10 @@
 <script src="{{ asset('frontend/yuwell/js/bootstrap-datepicker.th.min.js') }}"></script>
 <script src="{{ asset('frontend/yuwell/js/slick.min.js') }}"></script>
 
+<script src="{{ asset('/js/filepond-plugin-image-preview.js') }}"></script>
+<script src="{{ asset('/js/filepond.min.js') }}"></script>
+<script src="{{ asset('/js/filepond.jquery.js') }}"></script>
+
 <script type="text/javascript">
 	$('.input-group.date').datepicker({
 		language: "th"

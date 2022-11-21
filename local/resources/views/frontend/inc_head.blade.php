@@ -23,3 +23,6 @@ if (empty($_description))     $_description = '';
 <link rel="stylesheet" href="{{ asset('frontend/yuwell/css/bootstrap-datepicker3.standalone.min.css') }}">
 <link type="text/css" rel="stylesheet" href="{{ asset('frontend/yuwell/css/layout.css') }}" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link href="{{ asset('/css/filepond.css') }}" rel="stylesheet" />
+<link href="{{ asset('/css/filepond-plugin-image-preview.css') }}" rel="stylesheet" />
