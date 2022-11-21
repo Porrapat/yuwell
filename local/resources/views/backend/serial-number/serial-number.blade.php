@@ -81,6 +81,7 @@
                             <th class="text-center">Product Name</th>
                             <th class="text-center">Type Name</th>
                             <th class="text-center">Lot</th>
+                            <th class="text-center">Year Warranty</th>
                             <th class="text-center" width="25%">Action</th>
                         </tr>
                     </thead>
@@ -92,6 +93,7 @@
                             <td style="text-align: center; vertical-align: middle;"> {{$item->serial_number_product_name}}</td>
                             <td style="text-align: center; vertical-align: middle;"> {{$item->serial_number_type_name}}</td>
                             <td style="text-align: center; vertical-align: middle;"> {{$item->serial_number_lot}}</td>
+                            <td style="text-align: center; vertical-align: middle;"> {{$item->serial_number_year_from}}</td>
 
                             <td style="text-align: center; vertical-align: middle;">
                                 <div class="row">
@@ -154,6 +156,12 @@
                             <div class="form-group">
                                 <strong>Lot</strong>
                                 <input type="text" name="serial_number_lot" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <strong>Year Warranty</strong>
+                                <input type="number" name="serial_number_year_from" class="form-control" >
                             </div>
                         </div>
                 </form>

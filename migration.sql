@@ -62,6 +62,7 @@ CREATE TABLE `tb_serial_number` (
   `serial_number_product_name` varchar(150) DEFAULT NULL,
   `serial_number_type_name` varchar(150) DEFAULT NULL,
   `serial_number_lot` varchar(150) DEFAULT NULL,
+  `serial_number_year_from` INTEGER DEFAULT NULL,
   PRIMARY KEY (`serial_number_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -339,3 +340,5 @@ CREATE TABLE `tb_service_report_image` (
 -- ALTER TABLE tb_service_report ADD service_report_expense varchar(150) DEFAULT NULL AFTER service_report_replacement_parts; 
 -- ALTER TABLE tb_service_report ADD service_report_note varchar(300) DEFAULT NULL AFTER service_report_expense; 
 
+-- ALTER TABLE tb_serial_number ADD serial_number_year_from INTEGER DEFAULT NULL AFTER serial_number_lot; 
+-- UPDATE tb_serial_number SET serial_number_year_from = 3;
