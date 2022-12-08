@@ -104,4 +104,12 @@ class SerialNumberController extends Controller
         }
         return back()->withSuccess('Great! Data has been successfully uploaded.');
     }
+
+    public function deleteMore(Request $request)
+    {
+        foreach($request->serial_no as $item) {
+            serialnumber::find($item)->delete();
+        }
+        return response(200);
+    }
 }

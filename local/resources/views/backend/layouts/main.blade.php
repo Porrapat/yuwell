@@ -130,6 +130,35 @@
                 format: 'dd/mm/yyyy',
             });
         });
+
+
+        $(document).ready(function(){
+            $("#checkAll").change(function(){
+                $('.serial_no_check').prop('checked', this.checked);
+            });
+            $('#delMultiple').click(function(){
+                var new_array = new Array();
+                $('.serial_no_check:checked').each(function() {
+                    new_array.push(this.value);
+                });
+                $.ajax({
+                    type:'POST',
+                    url:'serial-number/delete-more',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data:    { serial_no: new_array },
+                    success:function(data) {
+                        swal.fire({
+                            icon:'success',
+                            title:'Success!',
+                            text:"You deleted",
+                            type:'success'
+                        }).then((value) => {
+                            window.location.href = "serial-number";
+                        }).catch(swal.noop);
+                    }
+                });
+            });
+        });
     </script>
 
 	@yield('script')

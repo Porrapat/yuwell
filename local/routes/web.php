@@ -78,6 +78,8 @@ Route::get('/admin/service-report/{id}/edit-only-status', 'ServiceReportControll
 Route::patch('/admin/service-report/{id}/update-only-status', 'ServiceReportController@updateOnlyStatus');
 Route::get('/admin/service-report/print/{id}', 'ServiceReportController@print');
 
+Route::post('/admin/serial-number/delete-more', 'SerialNumberController@deleteMore');
+
 
 Route::get('/clc', function() {
 
