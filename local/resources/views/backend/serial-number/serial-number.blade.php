@@ -69,6 +69,8 @@
                 <input class="form-control" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="serial_number_import_excel" name="serial_number_import_excel" type="file" />
                 <button type="submit" class="btn btn-success waves-effect"><i class="fa fa-plus"> </i> Import Data using Excel</button>
             </form>
+            <br/>
+            <a id="delMultiple" class="btn btn-danger waves-effect">ลบทีละหลายรายการ</a>
         </div>
 
         <div class="card-block table-border-style">
@@ -76,6 +78,7 @@
                 <table id="example1" class="table table-bordered">
                     <thead>
                         <tr>
+                            <th class="text-center"><input id="checkAll" type="checkbox" /></th>
                             <th class="text-center" width="5%">No.</th>
                             <th class="text-center">Serial No</th>
                             <th class="text-center">Product Name</th>
@@ -88,6 +91,7 @@
                     <tbody>
                         @foreach ($serialnumber as $key => $item)
                         <tr>
+                            <td style="text-align: center; vertical-align: middle;"><input class="serial_no_check" type="checkbox" name="serial_no" value="{{ $item->serial_number_id }}" /></td>
                             <td style="text-align: center; vertical-align: middle;">{{$key+1}}</td>
                             <td style="text-align: center; vertical-align: middle;"> {{$item->serial_number_no}}</td>
                             <td style="text-align: center; vertical-align: middle;"> {{$item->serial_number_product_name}}</td>
